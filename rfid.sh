@@ -27,7 +27,8 @@ case "$1" in
         echo $PID
         ;;
   stop)
-        echo "STOP"
+        echo -n "Stopping RFID listener: "
+        kill -TERM $(cat $RFID_PATH/rfid.pid)
         ;;
   restart|reload|condrestart)
         stop

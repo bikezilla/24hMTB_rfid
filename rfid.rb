@@ -20,6 +20,8 @@ KEYDOWN = 1
 
 TIME_FORMAT = '%d.%m.%y %H:%M:%S'
 
+PIDFILE = 'rfid.pid'
+
 def line_format(buffer)
   "#{buffer}; #{Time.now.strftime(TIME_FORMAT)}\n"
 end
@@ -51,6 +53,8 @@ def read_loop(evdev, file)
 end
 
 def main
+  File.open(PIDFILE, 'w') { |f| f << Process.pid }
+
   include Revdev
   STDOUT.sync = true
 
