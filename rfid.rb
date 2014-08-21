@@ -60,14 +60,14 @@ def main
   end
 
   evdev = EventDevice.new(ARGV[0])
-  evdev.grab
+  #evdev.grab
 
   file = File.open(ARGV[1],'at')
   file.sync = true
 
   trap "INT" do
     puts "# recieved :INT - exiting!"
-    evdev.ungrab
+    #evdev.ungrab
     file.close
     exit true
   end
