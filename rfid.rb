@@ -1,5 +1,16 @@
 require 'revdev'
 require 'pry'
+require "optparse"
+
+USAGE=<<__EOF
+usage:
+    ruby #{$0} event_device output_file
+
+  read from event_device and output to file
+
+example:
+    #{$0} /dev/input/event5 /var/www/nginx/serve/file.txt
+__EOF
 
 LEFT_SHIFT = 42
 ENTER = 28
@@ -41,11 +52,17 @@ end
 
 def main
   include Revdev
+  STDOUT.sync = true
 
-  evdev = EventDevice.new('/dev/input/event22')
+  if ARGV.length == 0
+    puts USAGE
+    exit false
+  end
+
+  evdev = EventDevice.new(ARGV[0])
   evdev.grab
 
-  file = File.open('checkpoint_0.txt','at')
+  file = File.open(ARGV[1],'at')
   file.sync = true
 
   trap "INT" do
