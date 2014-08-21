@@ -16,25 +16,18 @@ OUTPUT=/var/www/mtb/checkpoint0.txt
 RFID_PATH=/home/mtb/24hMTB_rfid
 PID=0
 
-function start() {
+### main logic ###
+case "$1" in
+  start)
         echo -n "Starting RFID listener: "
         chmod 777 $INPUT
         chmod 777 $OUTPUT
         cd $RFID_PATH && sudo -u mtb ruby rfid.rb $INPUT $OUTPUT &
         PID=$!
         echo $PID
-}
-
-function stop() {
-        echo "STOP"
-}
-### main logic ###
-case "$1" in
-  start)
-        start
         ;;
   stop)
-        stop
+        echo "STOP"
         ;;
   restart|reload|condrestart)
         stop
