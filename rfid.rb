@@ -32,7 +32,7 @@ def key_value(input)
 end
 
 def read_loop(evdev, file, log)
-  log << "Listening on #{evdev.file.path}, writing to #{file.path} ... \n"
+  log << "#{Time.now} : Listening on #{evdev.file.path}, writing to #{file.path} ... \n"
   buffer = ''
 
   loop do
@@ -45,7 +45,7 @@ def read_loop(evdev, file, log)
       when ENTER
         line = line_format(buffer)
         file << line
-        log << "WRITE: #{line}\n"
+        log << "#{Time.now} : WRITE: #{line}\n"
       else
         buffer << key_value(input)
       end
@@ -74,7 +74,7 @@ def main
   log.sync = true
 
   trap "INT" do
-    log << "# recieved :INT - exiting!\n"
+    log << "#{Time.now} : # recieved :INT - exiting!\n"
     #evdev.ungrab
     file.close
     log.close
