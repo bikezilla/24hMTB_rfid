@@ -21,6 +21,7 @@ KEYDOWN = 1
 TIME_FORMAT = '%d.%m.%y %H:%M:%S'
 
 PIDFILE = 'rfid.pid'
+LOGFILE = 'rfid.log'
 
 def line_format(buffer)
   "#{buffer}; #{Time.now.strftime(TIME_FORMAT)}\n"
@@ -30,8 +31,8 @@ def key_value(input)
   input.hr_code.to_s.gsub('KEY_','')
 end
 
-def read_loop(evdev, file)
-  p "Listening on #{evdev.file.path}, writing to #{file.path} ... "
+def read_loop(evdev, file, log)
+  log << "Listening on #{evdev.file.path}, writing to #{file.path} ... \n"
   buffer = ''
 
   loop do
@@ -44,7 +45,7 @@ def read_loop(evdev, file)
       when ENTER
         line = line_format(buffer)
         file << line
-        p "WRITE: #{line}"
+        log << "WRITE: #{line}\n"
       else
         buffer << key_value(input)
       end
@@ -69,14 +70,18 @@ def main
   file = File.open(ARGV[1],'at')
   file.sync = true
 
+  log = File.open(LOGFILE, 'at')
+  log.sync = true
+
   trap "INT" do
-    puts "# recieved :INT - exiting!"
+    log << "# recieved :INT - exiting!\n"
     #evdev.ungrab
     file.close
+    log.close
     exit true
   end
 
-  read_loop(evdev, file)
+  read_loop(evdev, file, log)
 end
 
 main
