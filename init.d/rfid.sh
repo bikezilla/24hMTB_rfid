@@ -12,7 +12,7 @@
 # /etc/init.d/rfid
 
 INPUT=/dev/input/event2
-OUTPUT=/var/www/mtb/checkpoint0.txt
+OUTPUT=/home/mtb/checkpoint/checkpoint.csv
 RFID_PATH=/home/mtb/24hMTB_rfid
 PID=0
 
