@@ -24,7 +24,7 @@ PIDFILE = 'rfid.pid'
 LOGFILE = 'rfid.log'
 
 def line_format(buffer)
-  "#{buffer}; #{Time.now.strftime(TIME_FORMAT)}\n"
+  "#{buffer};#{Time.now.strftime(TIME_FORMAT)}\n"
 end
 
 def key_value(input)
