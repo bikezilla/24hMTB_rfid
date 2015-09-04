@@ -248,5 +248,5 @@
 #
 
 check process rfid with pidfile /home/mtb/24hMTB_rfid/rfid.pid
-    start program = "/bin/bash -c '/etc/init.d/rfid start &>/home/mtb/24hMTB_rfid/myscript.out'"
-    stop program = "/bin/bash -c '/etc/init.d/rfid stop &>/home/mtb/24hMTB_rfid/myscript.out'"
+    start program = "/bin/bash -c '/etc/init.d/rfid.sh start &>/home/mtb/24hMTB_rfid/myscript.out'"
+    stop program = "/bin/bash -c '/etc/init.d/rfid.sh stop &>/home/mtb/24hMTB_rfid/myscript.out'"
