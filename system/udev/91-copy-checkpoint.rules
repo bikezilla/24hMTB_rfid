@@ -1,0 +1,3 @@
+ACTION=="add", ATTRS{idVendor}=="3538", ATTRS{idProduct}=="0059", RUN+="/home/mtb/copy_checkpoint.sh"
+
+ACTION=="add", ATTRS{idVendor}=="3538", ATTRS{idProduct}=="0054", RUN+="/home/mtb/copy_checkpoint.sh"
