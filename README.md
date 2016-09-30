@@ -1,7 +1,11 @@
 24hMTB_rfid
 ===========
 
-Ruby script to read RFID tags and write time stamps to a file
+Ruby script to read RFID tags and write time stamps to a file along with some system configuration.
+
+Hobby project used for timekeeping at a local 24h mountain bike race. The system setup consists of two Open Source hardware boards from Olimex - A20 and A10, which are setup to read tags from RFID cards and write them to a file. The file is shared over LAN to a computer running a sophisticated Excel sheet that does all the math.
+
+Someday it will evolve into a properly engineered timekeeping with no excel :)
 
 # Cheatsheet
 
