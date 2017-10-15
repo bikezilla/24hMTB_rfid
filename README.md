@@ -7,6 +7,27 @@ Hobby project used for timekeeping at a local 24h mountain bike race. The system
 
 Someday it will evolve into a properly engineered timekeeping with no excel :)
 
+# Setup
+
+## Add user and group
+1. groupadd mtb
+2. useradd mtb
+2. usermod -aG sudo mtb
+2. usermod -aG mtb mtb
+3. passwd mtb
+3. mkdir /home/mtb
+4. chown mtb:mtb /home/mtb
+5. su mtb && bash
+
+## Install ruby and ruby-dev with apt-get. Install gems needed by the script.
+
+## Configure all stuff found in the `/system` folder. Make sure to copy files
+into /etc with the right permissions.
+
+
+
+
+
 # Cheatsheet
 
 ##### Set date
@@ -31,6 +52,17 @@ update-rc.d rfid disable
 `resize` - sets to current terminal window
 
 `stty rows 50 cols 120`
+
+##### Check the battery status
+
+```
+root@a10Lime:~# cat /sys/bus/i2c/devices/0-0034/axp20-supplyer.28/power_supply/battery/status
+Charging
+root@a10Lime:~# cat /sys/bus/i2c/devices/0-0034/axp20-supplyer.28/power_supply/battery/voltage_now
+4086000
+root@a10Lime:~# cat /sys/bus/i2c/devices/0-0034/axp20-supplyer.28/power_supply/battery/health
+Good
+```
 
 # Setting up UDEV rules
 `udevadm info -a -p $(udevadm info -q path -n /dev/sdd1)`
