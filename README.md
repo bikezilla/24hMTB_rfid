@@ -69,6 +69,12 @@ Good
 
 Look for idVendor and idProduct.
 
+# Connect from a computer (MAC)
+- Make sure to install needed drivers
+- Connect the serial cable. Tx is Green, Rx is Red. Ground is Blue
+- Connect with picocom: `picocom -b 115200 /dev/tty.PL2303-00001014`
+- Use the standard olimex/olimex user/password pair
+
 # MAC serial cable drivers
 
 http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
