@@ -14,10 +14,8 @@ __EOF
 
 LEFT_SHIFT = 42
 ENTER = 28
-
-KEYPRESS = :EV_KEY
 KEYDOWN = 1
-
+KEYPRESS = :EV_KEY
 TIME_FORMAT = '%d.%m.%y %H:%M:%S'
 
 PIDFILE = 'rfid.pid'
@@ -45,6 +43,7 @@ def read_loop(evdev, file, log)
       when ENTER
         line = line_format(buffer)
         file << line
+        buffer = ''
         log << "#{Time.now} : WRITE: #{line}\n"
       else
         buffer << key_value(input)
@@ -56,7 +55,6 @@ end
 def main
   File.open(PIDFILE, 'w') { |f| f << Process.pid }
 
-  include Revdev
   STDOUT.sync = true
 
   if ARGV.length == 0
@@ -64,8 +62,7 @@ def main
     exit false
   end
 
-  evdev = EventDevice.new(ARGV[0])
-  #evdev.grab
+  evdev = Revdev::EventDevice.new(ARGV[0])
 
   file = File.open(ARGV[1],'at')
   file.sync = true
@@ -75,7 +72,6 @@ def main
 
   trap "INT" do
     log << "#{Time.now} : # recieved :INT - exiting!\n"
-    #evdev.ungrab
     file.close
     log.close
     exit true
