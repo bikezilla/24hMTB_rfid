@@ -16,25 +16,33 @@ OUTPUT=/home/mtb/checkpoint/checkpoint.csv
 RFID_PATH=/home/mtb/24hMTB_rfid
 PID=0
 
+start() {
+    echo -n "Starting RFID listener: "
+    chmod 777 $INPUT
+    chmod 777 $OUTPUT
+    cd $RFID_PATH && sudo -u mtb ruby rfid.rb $INPUT $OUTPUT &
+    PID=$!
+    echo $PID
+}
+
+stop() {
+    echo -n "Stopping RFID listener: "
+    kill -TERM $(cat $RFID_PATH/rfid.pid)
+}
+
 ### main logic ###
 case "$1" in
-  start)
-        echo -n "Starting RFID listener: "
-        chmod 777 $INPUT
-        chmod 777 $OUTPUT
-        cd $RFID_PATH && sudo -u mtb ruby rfid.rb $INPUT $OUTPUT &
-        PID=$!
-        echo $PID
+    start)
+        start
         ;;
-  stop)
-        echo -n "Stopping RFID listener: "
-        kill -TERM $(cat $RFID_PATH/rfid.pid)
+    stop)
+        stop
         ;;
-  restart|reload|condrestart)
+    restart|reload|condrestart)
         stop
         start
         ;;
-  *)
+    *)
         echo $"Usage: $0 {start|stop|restart|reload|status}"
         exit 1
 esac
